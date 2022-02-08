@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class TaskDAO {
 
@@ -15,7 +17,6 @@ public class TaskDAO {
     private String user = "root";
     private String password = "" + p.getPass() + "";
 
-    
     /* Connect */
     public Connection Connect() {
         Connection connection = null;
@@ -23,16 +24,16 @@ public class TaskDAO {
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(url, user, password);
-            return connection;
 
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Erro: " + e);
-            return null;
+        } finally {
+            return connection;
         }
     }
 
     /* Insert */
-    public void InsertTask(Task task) {
+    public void insertTask(Task task) {
         String insert = "insert into tasks (task_name,fk_id_user) values (?,?)";
 
         try {
@@ -45,47 +46,54 @@ public class TaskDAO {
             conn.close();
             pst.close();
 
-        } catch (Exception e) {
-            System.out.print("Erro: " + e);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de inserção: "+e);
+        }
+    }
+
+    /* SELECT */
+    public ArrayList<Task> ReadTasks() {
+        ArrayList<Task> task = new ArrayList<>();
+        String read = "select * from Tasks;";
+
+        try {
+            Connection connection = Connect();
+            PreparedStatement pst = connection.prepareStatement(read);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String id = String.valueOf(rs.getInt(1));
+                String tsk = rs.getString(2);
+                String a = null;
+                task.add(new Task(id, tsk));
+            }
+
+            connection.close();
+            pst.close();
+            rs.close();
+            return task;
+
+        } catch (SQLException e) {
+             JOptionPane.showMessageDialog(null, "Erro de leitura: "+e);
+            return task;
         }
     }
     
-    
-    
-    /* SELECT */
-    public ArrayList<Task> ReadTasks(){
-        	ArrayList<Task> task = new ArrayList<>();
-		String read = "select * from Tasks;";
+    /* DELETE */
+    public void deleteTask(Task task) {
+        String delete = "delte from tasks where task_id=?";
 
-		try {
-			Connection connection = Connect();
-			PreparedStatement pst = connection.prepareStatement(read);
-			ResultSet rs = pst.executeQuery();
-                        
-			while (rs.next()) {
-				String id = String.valueOf(rs.getInt(1));
-				String tsk = rs.getString(2);
-				task.add(new Task(id,tsk));
-			}
-			connection.close();
-			pst.close();
-			rs.close();
+        try {
+            Connection conn = Connect();
+            PreparedStatement pst = conn.prepareStatement(delete);
+            pst.setString(2, task.getId());
+            pst.executeUpdate();
 
-			return task;
+            conn.close();
+            pst.close();
 
-		} catch (Exception e) {
-			System.out.print("Erro: " + e);
-			return null;
-		}
+        } catch (SQLException e) {
+             JOptionPane.showMessageDialog(null, "Erro no delete: "+e);
+        }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

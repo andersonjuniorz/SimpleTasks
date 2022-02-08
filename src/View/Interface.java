@@ -2,7 +2,7 @@ package View;
 
 import Model.Task;
 import Model.TaskDAO;
-import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 public class Interface extends javax.swing.JFrame {
 
@@ -11,7 +11,7 @@ public class Interface extends javax.swing.JFrame {
 
     public Interface() {
         initComponents();
-
+        readAllTasks();
     }
 
     /**
@@ -30,8 +30,8 @@ public class Interface extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane = new javax.swing.JScrollPane();
+        tb_tasks = new javax.swing.JTable();
         btn_exit = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btn_search = new javax.swing.JButton();
@@ -92,15 +92,15 @@ public class Interface extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Lista de Tarefas"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tb_tasks.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Estado", "ID", "Task"
+                "ID", "Task"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane.setViewportView(tb_tasks);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -108,14 +108,14 @@ public class Interface extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -126,7 +126,7 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
-        btn_search.setText("Consulta");
+        btn_search.setText("Exibir Tudo");
         btn_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchActionPerformed(evt);
@@ -136,6 +136,11 @@ public class Interface extends javax.swing.JFrame {
         btn_update.setText("Atualizar");
 
         btn_delete.setText("Delete");
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -192,13 +197,13 @@ public class Interface extends javax.swing.JFrame {
 
         jMenuBar1.setBackground(new java.awt.Color(204, 204, 204));
 
-        jMenu1.setText("File");
+        jMenu1.setText("Arquivo");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Editar");
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Help");
+        jMenu3.setText("Ajuda");
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -225,8 +230,9 @@ public class Interface extends javax.swing.JFrame {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         task.setTask(txt_task.getText());
         task.setId("2");
-
-        dao.InsertTask(task);
+        
+        dao.insertTask(task);
+        dao.ReadTasks();
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
@@ -234,8 +240,14 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exitActionPerformed
 
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
-        // TODO add your handling code here:
+        //select all like       
+        //Just a test
+        readAllTasks();
     }//GEN-LAST:event_btn_searchActionPerformed
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        //delete task where id = ?
+    }//GEN-LAST:event_btn_deleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,15 +299,18 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tb_tasks;
     private javax.swing.JTextField txt_task;
     // End of variables declaration//GEN-END:variables
 
-    public void a() {
-        ArrayList<Task> list = dao.ReadTasks();
-        DefaultTableModel 
+    public void readAllTasks() {
+        DefaultTableModel model = (DefaultTableModel) tb_tasks.getModel();
+        model.setNumRows(0);    
+        
+        for (Task task1 : dao.ReadTasks()) {
+            model.addRow(new Object[]{task1.getId(),task1.getTask()});
+        }
     }
-
 }
