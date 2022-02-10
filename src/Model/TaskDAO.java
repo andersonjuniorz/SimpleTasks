@@ -40,7 +40,7 @@ public class TaskDAO {
             Connection conn = Connect();
             PreparedStatement pst = conn.prepareStatement(insert);
             pst.setString(1, task.getTask());
-            pst.setString(2, task.getId());
+            pst.setInt(2, task.getId());
             pst.executeUpdate();
 
             conn.close();
@@ -62,9 +62,9 @@ public class TaskDAO {
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
-                String id = String.valueOf(rs.getInt(1));
+                int id = rs.getInt(1);
                 String tsk = rs.getString(2);
-                String a = null;
+                //String a = null;
                 task.add(new Task(id, tsk));
             }
 
@@ -81,12 +81,12 @@ public class TaskDAO {
     
     /* DELETE */
     public void deleteTask(Task task) {
-        String delete = "delte from tasks where task_id=?";
+        String delete = "delete from tasks where task_id=?";
 
         try {
             Connection conn = Connect();
             PreparedStatement pst = conn.prepareStatement(delete);
-            pst.setString(2, task.getId());
+            pst.setInt(2, task.getId());
             pst.executeUpdate();
 
             conn.close();
