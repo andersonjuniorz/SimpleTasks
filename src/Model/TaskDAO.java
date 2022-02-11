@@ -64,7 +64,6 @@ public class TaskDAO {
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String tsk = rs.getString(2);
-                //String a = null;
                 task.add(new Task(id, tsk));
             }
 
@@ -86,7 +85,7 @@ public class TaskDAO {
         try {
             Connection conn = Connect();
             PreparedStatement pst = conn.prepareStatement(delete);
-            pst.setInt(2, task.getId());
+            pst.setInt(1, task.getId());
             pst.executeUpdate();
 
             conn.close();

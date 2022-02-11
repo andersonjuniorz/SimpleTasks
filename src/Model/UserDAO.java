@@ -83,30 +83,33 @@ public class UserDAO {
 
     }
 
-    public String[] ReadLoginPass(String user) {
-        String read = "select user_name,user_password from users where user_name = ?;";
-        String[] userD = new String[1];
+    //Usado no login
+    public void selectUser(User user) {
+        String read = "select user_name, user_password from users where user_name=?";
+
         try {
             Connection connection = Connect();
             PreparedStatement pst = connection.prepareStatement(read);
-            pst.setString(1, user);
+            pst.setString(1, user.getUser());
             ResultSet rs = pst.executeQuery();
 
+            /*
+                Quando o usuario informado nao existe no banco, os dados anteriores 
+                sao considerados como corretos causando erro na verificacao do 
+                usuario existente, por isso resetei os dados passando nulo
+             */
+            user.setUser(null, null);
+
             while (rs.next()) {
-                userD[0] = rs.getString(1);
-                userD[1] = rs.getString(2);
+                user.setUser(rs.getString(1), rs.getString(2));
             }
 
             connection.close();
             pst.close();
             rs.close();
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de leitura: " + e);
-            return null;
+        } catch (Exception e) {
+            System.out.print("Erro: " + e);
         }
-        return userD;
     }
-    /* update */
- /* delete */
 }
