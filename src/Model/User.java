@@ -8,27 +8,26 @@ public class User {
     private String password;
     private String email;
 
+    public User() {
+    }
+
+    public User(String user, String pass) {
+        this.user = user;
+        this.password = pass;
+    }
+
+    public User(String user, String pass, String email) {
+        this.user = user;
+        this.password = pass;
+        this.email = email;
+    }
+
     public User(int id, int remmember, String user, String password, String email) {
         this.id = id;
         this.remmember = remmember;
         this.user = user;
         this.password = password;
         this.email = email;
-    }
-
-    public void User(String user, String pass, String email) {
-        this.user = user;
-        this.password = pass;
-        this.email = email;
-    }
-
-    User(String user, String pass) {
-        this.user = user;
-        this.password = pass;
-    }
-
-    public User() {
-
     }
 
     public void setUser(String user, String pass, String email) {
