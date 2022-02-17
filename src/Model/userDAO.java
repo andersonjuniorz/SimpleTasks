@@ -1,11 +1,11 @@
 package Model;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class UserDAO {
@@ -26,7 +26,7 @@ public class UserDAO {
             connection = DriverManager.getConnection(url, user, password);
             return connection;
 
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao conectar: " + e);
             return null;
         }
@@ -51,7 +51,7 @@ public class UserDAO {
             conn.close();
             pst.close();
 
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao inserir: " + e);
         }
     }
@@ -108,7 +108,7 @@ public class UserDAO {
             pst.close();
             rs.close();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.print("Erro: " + e);
         }
     }
