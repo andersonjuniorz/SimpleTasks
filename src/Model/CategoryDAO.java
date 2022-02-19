@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -25,15 +24,15 @@ public class CategoryDAO {
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(url, user, password);
+            return connection;
 
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e);
-        } finally {
-            return connection;
+            return null;
         }
     }
 
-    /* Insert */
+    /* insere uma nova categoria */
     public void insertCat(Category cat) {
         String insert = "insert into category (cat_name) values (?)";
 
@@ -51,7 +50,7 @@ public class CategoryDAO {
         }
     }
 
-    /* SELECT */
+    /* Exibe todas as categorias */
     public void ReadCat(JTable tb_category) {
         DefaultTableModel dtm = (DefaultTableModel) tb_category.getModel();
         String read = "select cat_name from category ORDER BY cat_id";
@@ -75,7 +74,7 @@ public class CategoryDAO {
         }
     }
 
-    /* SELECT ID WHERE CATEGORY_NAME IS '?' */
+    /* Lê o ID da categoria */
     public void ReadCatID(Category cat) {
         String read = "select cat_id from category where cat_name = ?";
 
@@ -98,7 +97,26 @@ public class CategoryDAO {
         }
     }
 
-    /* DELETE */
+    /* Edita a categoria */
+    public void UpdateCat(Category cat) {
+        String update = "update category set cat_name=? where cat_id=?";
+
+        try {
+            Connection conn = Connect();
+            PreparedStatement pst = conn.prepareStatement(update);
+            pst.setString(1, cat.getCat_name());
+            pst.setInt(2, cat.getCat_id());
+            pst.executeUpdate();
+
+            conn.close();
+            pst.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro na edição: " + e);
+        }
+    }
+
+    /* Deleta a categoria pelo ID */
     public void deleteCat(Category cat) {
         String delete = "delete from category where cat_id=?";
 

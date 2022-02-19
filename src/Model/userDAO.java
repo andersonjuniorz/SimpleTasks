@@ -85,7 +85,13 @@ public class UserDAO {
 
     //Usado no login
     public void selectUser(User user) {
-        String read = "select user_name, user_password from users where user_name=?";
+        /*
+            Quando o usuario informado nao existe no banco, os dados anteriores 
+            sao considerados como corretos causando erro na verificacao do 
+            usuario existente, por isso resetei os dados passando nulo
+         */
+        user.setUser(null, null);
+        String read = "select user_id, user_name, user_password from users where user_name=?";
 
         try {
             Connection connection = Connect();
@@ -93,15 +99,9 @@ public class UserDAO {
             pst.setString(1, user.getUser());
             ResultSet rs = pst.executeQuery();
 
-            /*
-                Quando o usuario informado nao existe no banco, os dados anteriores 
-                sao considerados como corretos causando erro na verificacao do 
-                usuario existente, por isso resetei os dados passando nulo
-             */
-            user.setUser(null, null);
-
             while (rs.next()) {
-                user.setUser(rs.getString(1), rs.getString(2));
+                //           id,           username,        password
+                user.setUser(rs.getInt(1), rs.getString(2), rs.getString(3));
             }
 
             connection.close();

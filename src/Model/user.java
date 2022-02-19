@@ -30,12 +30,12 @@ public class User {
         this.email = email;
     }
 
-    public void setUser(String user, String pass, String email) {
-        this.user = user;
-        this.password = pass;
-        this.email = email;
-    }
 
+    public void setUser(int id, String name, String passw) {
+        this.id = id;
+        this.user = name;
+        this.password = passw;
+    }
     public void setUser(String user, String pass) {
         this.user = user;
         this.password = pass;
@@ -44,7 +44,12 @@ public class User {
     public int getId() {
         return id;
     }
-
+    public void setUser(String user, String pass, String email) {
+        this.user = user;
+        this.password = pass;
+        this.email = email;
+    }
+    
     public void setId(int id) {
         this.id = id;
     }

@@ -221,8 +221,6 @@ public class LogIn extends javax.swing.JDialog {
         String username = txt_user.getText().trim();
         String pass = String.valueOf(txt_pass.getPassword());
 
-        //Setando dados no model, passando eles no dao
-        //dao seta dados no model
         user.setUser(username, pass);
         dao.selectUser(user);
 
