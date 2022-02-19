@@ -14,12 +14,12 @@
             <Property name="text" type="java.lang.String" value="Arquivo"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="sub_menuSair">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sair"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sub_menuSairActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -116,7 +116,7 @@
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -150,11 +150,11 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txt_task" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                           <Component id="btn_add" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="txt_task" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -203,8 +203,8 @@
                       <Component id="jScrollPane" min="-2" pref="721" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btn_update" max="32767" attributes="0"/>
-                          <Component id="btn_delete" pref="91" max="32767" attributes="0"/>
+                          <Component id="btn_updateTask" max="32767" attributes="0"/>
+                          <Component id="btn_deleteTask" pref="91" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -217,9 +217,9 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jScrollPane" min="-2" pref="204" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="btn_delete" max="32767" attributes="0"/>
+                              <Component id="btn_deleteTask" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btn_update" min="-2" pref="101" max="-2" attributes="0"/>
+                              <Component id="btn_updateTask" min="-2" pref="101" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="25" max="32767" attributes="0"/>
@@ -268,16 +268,16 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="btn_delete">
+            <Component class="javax.swing.JButton" name="btn_deleteTask">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Deletar"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_deleteActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_deleteTaskActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btn_update">
+            <Component class="javax.swing.JButton" name="btn_updateTask">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Editar"/>
                 <Property name="enabled" type="boolean" value="false"/>
@@ -387,8 +387,10 @@
             <Component class="javax.swing.JButton" name="btn_catEdit">
               <Properties>
                 <Property name="text" type="java.lang.String" value="EDITAR"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_catEditActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
               <AuxValues>

@@ -4,6 +4,7 @@ import Model.Category;
 import Model.CategoryDAO;
 import Model.Task;
 import Model.TaskDAO;
+import Model.User;
 import javax.swing.JOptionPane;
 
 public class Interface extends javax.swing.JFrame {
@@ -12,6 +13,8 @@ public class Interface extends javax.swing.JFrame {
     TaskDAO task_dao = new TaskDAO();
     Category cat = new Category();
     Task task = new Task();
+    User user = new User();
+    //int userID = user.getId();
 
     public Interface() {
         initComponents();
@@ -36,8 +39,8 @@ public class Interface extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane = new javax.swing.JScrollPane();
         tb_tasks = new javax.swing.JTable();
-        btn_delete = new javax.swing.JButton();
-        btn_update = new javax.swing.JButton();
+        btn_deleteTask = new javax.swing.JButton();
+        btn_updateTask = new javax.swing.JButton();
         btn_exit = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
@@ -50,7 +53,7 @@ public class Interface extends javax.swing.JFrame {
         tb_category = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        sub_menuSair = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
@@ -79,10 +82,10 @@ public class Interface extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_task, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_task, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -103,16 +106,16 @@ public class Interface extends javax.swing.JFrame {
         ));
         jScrollPane.setViewportView(tb_tasks);
 
-        btn_delete.setText("Deletar");
-        btn_delete.setEnabled(false);
-        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+        btn_deleteTask.setText("Deletar");
+        btn_deleteTask.setEnabled(false);
+        btn_deleteTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_deleteActionPerformed(evt);
+                btn_deleteTaskActionPerformed(evt);
             }
         });
 
-        btn_update.setText("Editar");
-        btn_update.setEnabled(false);
+        btn_updateTask.setText("Editar");
+        btn_updateTask.setEnabled(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -123,8 +126,8 @@ public class Interface extends javax.swing.JFrame {
                 .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 721, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_delete, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
+                    .addComponent(btn_updateTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_deleteTask, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -134,9 +137,9 @@ public class Interface extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(btn_delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_deleteTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_update, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_updateTask, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -168,7 +171,11 @@ public class Interface extends javax.swing.JFrame {
         });
 
         btn_catEdit.setText("EDITAR");
-        btn_catEdit.setEnabled(false);
+        btn_catEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_catEditActionPerformed(evt);
+            }
+        });
 
         tb_category.setBackground(new java.awt.Color(240, 240, 240));
         tb_category.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -276,7 +283,7 @@ public class Interface extends javax.swing.JFrame {
                 .addComponent(btn_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 6, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -284,13 +291,13 @@ public class Interface extends javax.swing.JFrame {
 
         jMenu1.setText("Arquivo");
 
-        jMenuItem1.setText("Sair");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        sub_menuSair.setText("Sair");
+        sub_menuSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                sub_menuSairActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(sub_menuSair);
 
         jMenuBar1.add(jMenu1);
 
@@ -332,10 +339,10 @@ public class Interface extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btn_exitActionPerformed
 
-    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+    private void btn_deleteTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteTaskActionPerformed
         //delete task where id = ?
 
-    }//GEN-LAST:event_btn_deleteActionPerformed
+    }//GEN-LAST:event_btn_deleteTaskActionPerformed
 
     private void btn_catAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_catAddActionPerformed
         if (txt_catAdd.getText().trim().equals("")) {
@@ -370,12 +377,34 @@ public class Interface extends javax.swing.JFrame {
         int row = tb_category.getSelectedRow();
         if (row >= 0) {
             cat.setCat_name(tb_category.getModel().getValueAt(row, 0).toString());
+            System.out.println(cat.getCat_name());
         }
     }//GEN-LAST:event_tb_categoryMouseClicked
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void sub_menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sub_menuSairActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_sub_menuSairActionPerformed
+
+    private void btn_catEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_catEditActionPerformed
+        int row = tb_category.getSelectedRow();
+
+        if (row >= 0) {
+
+            Object[] options = {"Sim", "Não"};
+            int answer = JOptionPane.showOptionDialog(rootPane, "Tem certeza que deseja editar esta categoria '" + cat.getCat_name() + "' ?", "Deletar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (answer == JOptionPane.YES_OPTION) {
+                
+                cat_dao.ReadCatID(cat);
+                cat.setCat_name(txt_catAdd.getText().trim());
+                cat_dao.UpdateCat(cat);
+                cat_dao.ReadCat(tb_category);
+                               
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Por favor, Selecione uma categoria.", "Nenhum item selecionado", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_catEditActionPerformed
 
     /**
      * @param args the command line arguments
@@ -421,16 +450,15 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JButton btn_catAdd;
     private javax.swing.JButton btn_catDel;
     private javax.swing.JButton btn_catEdit;
-    private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_deleteTask;
     private javax.swing.JButton btn_exit;
-    private javax.swing.JButton btn_update;
+    private javax.swing.JButton btn_updateTask;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -438,6 +466,7 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JMenuItem sub_menuSair;
     private javax.swing.JTable tb_category;
     private javax.swing.JTable tb_tasks;
     private javax.swing.JTextField txt_catAdd;
