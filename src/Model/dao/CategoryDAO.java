@@ -1,5 +1,7 @@
-package Model;
+package Model.dao;
 
+import Model.bean.Category;
+import Model.bean.Task;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,13 +13,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class CategoryDAO {
 
-    Password.Pass p = new Password.Pass();
+    UserPass.dbUser u = new UserPass.dbUser();
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String url = "jdbc:mysql://localhost:3306/todoList?useTimezone=true&serverTimezone=UTC";
-    private String user = "root";
-    private String password = "" + p.getPass() + "";
+    private String user = ""+u.getUsername()+"";
+    private String password = "" + u.getPass() + "";
 
-    /* Connect */
+    /* CONNECT */
     public Connection Connect() {
         Connection connection = null;
 
@@ -33,8 +35,8 @@ public class CategoryDAO {
     }
 
     /* insere uma nova categoria */
-    public void insertCat(Category cat) {
-        String insert = "insert into category (cat_name) values (?)";
+    public void saveCategory(Category cat) {
+        String insert = "insert into Category (name) values (?)";
 
         try {
             Connection conn = Connect();
@@ -53,7 +55,7 @@ public class CategoryDAO {
     /* Exibe todas as categorias */
     public void ReadCat(JTable tb_category) {
         DefaultTableModel dtm = (DefaultTableModel) tb_category.getModel();
-        String read = "select cat_name from category ORDER BY cat_id";
+        String read = "select name from Category ORDER BY idCategory";
 
         try {
             Connection connection = Connect();
@@ -73,10 +75,36 @@ public class CategoryDAO {
             JOptionPane.showMessageDialog(null, "Erro de leitura: " + e);
         }
     }
+    
+   /* LE O PRIMEIRO ID DA CATEGORIA */
+    public Task ReadFirstCatID(Category cat) {
+        Task task = new Task();
+        String read = "SELECT idCategory FROM Category ORDER BY idCategory Limit 1";
 
-    /* Lê o ID da categoria */
-    public void ReadCatID(Category cat) {
-        String read = "select cat_id from category where cat_name = ?";
+        try {
+            Connection connection = Connect();
+            PreparedStatement pst = connection.prepareStatement(read);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                cat.setCat_id(rs.getInt(1));
+                task.setFk_cat_id(rs.getInt(1));
+            }
+            
+            connection.close();
+            pst.close();
+            rs.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de leitura: " + e);
+        }finally{
+            return task;
+        }
+    }
+    
+    /* LE O ID DA CATEGORIA */
+    public void ReadCatIDWhereName(Category cat) {
+        String read = "SELECT idCategory FROM Category WHERE name = ?";
 
         try {
             Connection connection = Connect();
@@ -87,7 +115,7 @@ public class CategoryDAO {
             while (rs.next()) {
                 cat.setCat_id(rs.getInt(1));
             }
-
+            
             connection.close();
             pst.close();
             rs.close();
@@ -99,7 +127,7 @@ public class CategoryDAO {
 
     /* Edita a categoria */
     public void UpdateCat(Category cat) {
-        String update = "update category set cat_name=? where cat_id=?";
+        String update = "update Category set name=? where idCategory=?";
 
         try {
             Connection conn = Connect();
@@ -118,7 +146,7 @@ public class CategoryDAO {
 
     /* Deleta a categoria pelo ID */
     public void deleteCat(Category cat) {
-        String delete = "delete from category where cat_id=?";
+        String delete = "delete from Category where idCategory=?";
 
         try {
             Connection conn = Connect();

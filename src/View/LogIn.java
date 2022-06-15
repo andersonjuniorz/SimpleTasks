@@ -1,10 +1,9 @@
 package View;
 
 import java.awt.Cursor;
-import Model.User;
-import Model.UserDAO;
+import Model.bean.User;
+import Model.dao.UserDAO;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class LogIn extends javax.swing.JDialog {
@@ -15,6 +14,10 @@ public class LogIn extends javax.swing.JDialog {
     public LogIn(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    LogIn() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -34,7 +37,6 @@ public class LogIn extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txt_user = new javax.swing.JTextField();
         txt_pass = new javax.swing.JPasswordField();
-        ckb_remmember = new javax.swing.JCheckBox();
         btn_forgotPass = new javax.swing.JLabel();
         btn_cadastrar = new javax.swing.JButton();
         btn_login = new javax.swing.JButton();
@@ -50,14 +52,14 @@ public class LogIn extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(72, 72, 72)
+                .addGap(101, 101, 101)
                 .addComponent(jLabel1)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -81,8 +83,6 @@ public class LogIn extends javax.swing.JDialog {
                 txt_passKeyPressed(evt);
             }
         });
-
-        ckb_remmember.setText("Lembrar senha");
 
         btn_forgotPass.setFont(new java.awt.Font("Noto Serif", 1, 12)); // NOI18N
         btn_forgotPass.setForeground(new java.awt.Color(51, 51, 255));
@@ -119,10 +119,9 @@ public class LogIn extends javax.swing.JDialog {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(86, 86, 86)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(109, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ckb_remmember)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel2)
                         .addComponent(jLabel3)
@@ -133,12 +132,12 @@ public class LogIn extends javax.swing.JDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(73, 73, 73)
                         .addComponent(btn_forgotPass)))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addGap(93, 93, 93))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_user, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,15 +145,13 @@ public class LogIn extends javax.swing.JDialog {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ckb_remmember)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(37, 37, 37)
                 .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_cadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_forgotPass)
-                .addGap(40, 40, 40))
+                .addGap(39, 39, 39))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -164,7 +161,7 @@ public class LogIn extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -196,53 +193,36 @@ public class LogIn extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_forgotPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_forgotPassMouseClicked
-        this.dispose();
-        ForgotPasword fp = new ForgotPasword();
-        fp.setVisible(true);
-    }//GEN-LAST:event_btn_forgotPassMouseClicked
-
+            
     private void btn_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadastrarActionPerformed
         this.dispose();
         SignUp sg = new SignUp();
         sg.setVisible(true);
     }//GEN-LAST:event_btn_cadastrarActionPerformed
 
-    private void btn_forgotPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_forgotPassMouseEntered
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_btn_forgotPassMouseEntered
-
-    private void btn_forgotPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_forgotPassMouseExited
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-    }//GEN-LAST:event_btn_forgotPassMouseExited
-
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-        String username = txt_user.getText().trim();
+        String username = txt_user.getText().strip();
         String pass = String.valueOf(txt_pass.getPassword());
 
-        user.setUser(username, pass);
-        dao.selectUser(user);
-
-        //Campo vazio
+        user.setUser(null, null);
+        user = dao.selectUser(username);          
+                
         if (username.equals("") || pass.equals("")) {
             JOptionPane.showMessageDialog(null, "Campo vazio!");
 
         } else {
-            //verifica se usuario existe
-            if (user.getUser() == null) {
+            if (user.getUsername() == null) {
                 JOptionPane.showMessageDialog(null, "Usuário não existe!");
 
-                //Verifica se os dados estao corretos
-            } else if (username.equals(user.getUser()) && pass.equals(user.getPassword())) {
+            } else if (username.equals(user.getUsername()) && pass.equals(user.getPass())) {  
+                
+                main m = new main();
                 this.dispose();
+                m.setVisible(true);    
+                m.user.setId(user.getId());
+                JOptionPane.showMessageDialog(null, "Welcome " + user.getUsername() + "!");
+                
 
-                //Open interface
-                Interface intfc = new Interface();
-                intfc.setVisible(true);
-                JOptionPane.showMessageDialog(null, "Welcome " + user.getUser() + "!");
-
-                //senao exibe mensagem de erro
             } else {
                 JOptionPane.showMessageDialog(null, "Login ou senha inválido.");
             }
@@ -262,6 +242,20 @@ public class LogIn extends javax.swing.JDialog {
             btn_login.doClick();
         }
     }//GEN-LAST:event_txt_passKeyPressed
+
+    private void btn_forgotPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_forgotPassMouseExited
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_btn_forgotPassMouseExited
+
+    private void btn_forgotPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_forgotPassMouseEntered
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btn_forgotPassMouseEntered
+
+    private void btn_forgotPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_forgotPassMouseClicked
+        this.dispose();
+        ForgotPasword fp = new ForgotPasword();
+        fp.setVisible(true);
+    }//GEN-LAST:event_btn_forgotPassMouseClicked
 
     /**
      * @param args the command line arguments
@@ -309,7 +303,6 @@ public class LogIn extends javax.swing.JDialog {
     private javax.swing.JButton btn_cadastrar;
     private javax.swing.JLabel btn_forgotPass;
     private javax.swing.JButton btn_login;
-    private javax.swing.JCheckBox ckb_remmember;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
