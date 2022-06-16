@@ -1,5 +1,6 @@
-package Model;
+package Model.dao;
 
+import Model.bean.User;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,14 +11,13 @@ import javax.swing.JOptionPane;
 
 public class UserDAO {
 
-    Password.Pass p = new Password.Pass();
-
+    UserPass.dbUser u = new UserPass.dbUser();
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String url = "jdbc:mysql://localhost:3306/todoList?useTimezone=true&serverTimezone=UTC";
-    private String user = "root";
-    private String password = "" + p.getPass() + "";
+    private String user = "" + u.getUsername()+ "";
+    private String password = "" + u.getPass() + "";
 
-    /* Connect */
+    /* CONNECT */
     public Connection Connect() {
         Connection connection = null;
 
@@ -32,20 +32,19 @@ public class UserDAO {
         }
     }
 
-    /* Insert */
+    /* CRIAR NOVO USUARIO */
     public void InsertUser(User user) {
-        String insert = "insert into users (user_name,user_password,user_email) values (?,?,?)";
+        String insert = "insert into User (username,passw,email) values (?,?,?)";
 
         try {
             Connection conn = Connect();
             PreparedStatement pst = conn.prepareStatement(insert);
-            pst.setString(1, user.getUser());
-            pst.setString(2, user.getPassword());
+            pst.setString(1, user.getUsername());
+            pst.setString(2, user.getPass());
             pst.setString(3, user.getEmail());
-            JOptionPane.showMessageDialog(null, user.getUser());
-            JOptionPane.showMessageDialog(null, user.getPassword());
+            JOptionPane.showMessageDialog(null, user.getUsername());
+            JOptionPane.showMessageDialog(null, user.getPass());
             JOptionPane.showMessageDialog(null, user.getEmail());
-
             pst.executeUpdate();
 
             conn.close();
@@ -53,18 +52,19 @@ public class UserDAO {
 
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao inserir: " + e);
+            System.out.println(e);
         }
     }
 
     /* read */
     public String ReadUser(User user) {
         String name = null;
-        String read = "select user_name from users where user_name = ?;";
+        String read = "select username from User where username = ?;";
 
         try {
             Connection connection = Connect();
             PreparedStatement pst = connection.prepareStatement(read);
-            pst.setString(1, user.getUser());
+            pst.setString(1, user.getUsername());
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -83,33 +83,30 @@ public class UserDAO {
 
     }
 
-    //Usado no login
-    public void selectUser(User user) {
-        /*
-            Quando o usuario informado nao existe no banco, os dados anteriores 
-            sao considerados como corretos causando erro na verificacao do 
-            usuario existente, por isso resetei os dados passando nulo
-         */
-        user.setUser(null, null);
-        String read = "select user_id, user_name, user_password from users where user_name=?";
+    /* PESQUISA USUARIO PELO USERNAME */
+    public User selectUser(String username) {
+   
+        User user = new User();
+        String read = "select idUser, username, passw from User where username=?";
 
         try {
             Connection connection = Connect();
             PreparedStatement pst = connection.prepareStatement(read);
-            pst.setString(1, user.getUser());
+            pst.setString(1, username);
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
                 //           id,           username,        password
-                user.setUser(rs.getInt(1), rs.getString(2), rs.getString(3));
+                user.setUser(rs.getInt(1), rs.getString(2), rs.getString(3));                
             }
-
+            
             connection.close();
             pst.close();
             rs.close();
-
+            
         } catch (SQLException e) {
             System.out.print("Erro: " + e);
         }
+        return user;
     }
 }

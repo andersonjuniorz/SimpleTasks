@@ -1,4 +1,4 @@
-package Model;
+package Model.bean;
 
 public class Category {
     private int cat_id;
