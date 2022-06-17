@@ -3,7 +3,10 @@ package View;
 import java.awt.Cursor;
 import Model.bean.User;
 import Model.dao.UserDAO;
+
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class LogIn extends javax.swing.JDialog {
@@ -14,6 +17,10 @@ public class LogIn extends javax.swing.JDialog {
     public LogIn(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        jLabel4.setIcon(new ImageIcon("lock.png"));
+        jPanel3.add(jLabel4);
+        validate();
     }
 
     LogIn() {
@@ -32,6 +39,7 @@ public class LogIn extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -43,6 +51,11 @@ public class LogIn extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("David", 0, 36)); // NOI18N
         jLabel1.setText("Login");
@@ -55,12 +68,18 @@ public class LogIn extends javax.swing.JDialog {
                 .addGap(101, 101, 101)
                 .addComponent(jLabel1)
                 .addContainerGap(122, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -193,7 +212,7 @@ public class LogIn extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-            
+
     private void btn_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadastrarActionPerformed
         this.dispose();
         SignUp sg = new SignUp();
@@ -205,8 +224,8 @@ public class LogIn extends javax.swing.JDialog {
         String pass = String.valueOf(txt_pass.getPassword());
 
         user.setUser(null, null);
-        user = dao.selectUser(username);          
-                
+        user = dao.selectUser(username);
+
         if (username.equals("") || pass.equals("")) {
             JOptionPane.showMessageDialog(null, "Campo vazio!");
 
@@ -214,14 +233,13 @@ public class LogIn extends javax.swing.JDialog {
             if (user.getUsername() == null) {
                 JOptionPane.showMessageDialog(null, "Usuário não existe!");
 
-            } else if (username.equals(user.getUsername()) && pass.equals(user.getPass())) {  
-                
+            } else if (username.equals(user.getUsername()) && pass.equals(user.getPass())) {
+
                 main m = new main();
                 this.dispose();
-                m.setVisible(true);    
+                m.setVisible(true);
                 m.user.setId(user.getId());
                 JOptionPane.showMessageDialog(null, "Welcome " + user.getUsername() + "!");
-                
 
             } else {
                 JOptionPane.showMessageDialog(null, "Login ou senha inválido.");
@@ -256,6 +274,10 @@ public class LogIn extends javax.swing.JDialog {
         ForgotPasword fp = new ForgotPasword();
         fp.setVisible(true);
     }//GEN-LAST:event_btn_forgotPassMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -306,6 +328,7 @@ public class LogIn extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
