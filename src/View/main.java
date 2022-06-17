@@ -24,25 +24,6 @@ public class main extends javax.swing.JFrame {
     public main() {
         initComponents();
         setIcon();
-        txt_task.requestFocus();
-        cat_dao.ReadCat(tb_category);
-        task = cat_dao.ReadFirstCatID(cat);
-        task_dao.ReadTasks(tb_tasks, task);
-
-        cb_priority.getEditor().getEditorComponent().addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                cb_priority.showPopup();
-            }
-        });
     }
 
     /**
@@ -86,6 +67,11 @@ public class main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("To Do List");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Tarefa"));
 
@@ -365,6 +351,7 @@ public class main extends javax.swing.JFrame {
         jMenu1.setText("Arquivo");
 
         subMenu_exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        subMenu_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/close (1).png"))); // NOI18N
         subMenu_exit.setText("Sair");
         subMenu_exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -378,13 +365,9 @@ public class main extends javax.swing.JFrame {
         jMenu3.setText("Ajuda");
 
         subMenu_about.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        subMenu_about.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/note.png"))); // NOI18N
         subMenu_about.setText("Sobre");
         subMenu_about.setEnabled(false);
-        subMenu_about.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subMenu_aboutActionPerformed(evt);
-            }
-        });
         jMenu3.add(subMenu_about);
 
         jMenuBar1.add(jMenu3);
@@ -407,7 +390,8 @@ public class main extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    public void setIcon() {
+
+    private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Icons/logo.png")));
     }
 
@@ -432,7 +416,6 @@ public class main extends javax.swing.JFrame {
                 taskSetDefaultValues();
                 task_dao.insertTask(task);
                 task_dao.ReadTasks(tb_tasks, task);
-                System.out.println(user.getId());
             }
         }
     }//GEN-LAST:event_btn_addTaskActionPerformed
@@ -454,17 +437,6 @@ public class main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Por favor, Selecione uma categoria.", "Nenhum item selecionado", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_deleteTaskActionPerformed
-
-    private void btn_catAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_catAddActionPerformed
-        if (txt_catAdd.getText().strip().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Por favor, digite um nome.", "Categoria sem nome", JOptionPane.ERROR_MESSAGE);
-
-        } else {
-            cat.setCat_name(txt_catAdd.getText().strip());
-            cat_dao.saveCategory(cat);
-            cat_dao.ReadCat(tb_category);
-        }
-    }//GEN-LAST:event_btn_catAddActionPerformed
 
     private void btn_catDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_catDelActionPerformed
         int row = tb_category.getSelectedRow();
@@ -539,24 +511,27 @@ public class main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txt_taskKeyPressed
 
-    private void subMenu_aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenu_aboutActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_subMenu_aboutActionPerformed
-
     private void btn_updateTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateTaskActionPerformed
         int row = tb_tasks.getSelectedRow();
+
         if (row >= 0) {
 
-            //Capturando dados editados
-            task.setDone(Boolean.valueOf(tb_tasks.getModel().getValueAt(row, 0).toString()));
-            task.setDescr(tb_tasks.getModel().getValueAt(row, 1).toString());
-            task.setPriority(tb_tasks.getModel().getValueAt(row, 2).toString());
-            task.setDueDate(tb_tasks.getModel().getValueAt(row, 3).toString());
+            task_dao.ReadTaskIDWhereName(task);            
 
-            //enviando dados editados
-            task_dao.UpdateTask(task);
-            task_dao.ReadTasks(tb_tasks, task);
+            Object[] options = {"Sim", "Não"};
+            int answer = JOptionPane.showOptionDialog(null, "Deseja alterar a tarefa '"+task.getDescr()+"' ?", "Alterar tarefa", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (answer == JOptionPane.YES_OPTION) {
 
+                //Capturando dados editados
+                task.setDone(Boolean.valueOf(tb_tasks.getModel().getValueAt(row, 0).toString()));
+                task.setDescr(tb_tasks.getModel().getValueAt(row, 1).toString());
+                task.setPriority(tb_tasks.getModel().getValueAt(row, 2).toString());
+                task.setDueDate(tb_tasks.getModel().getValueAt(row, 3).toString());
+
+                //enviando dados editados
+                task_dao.UpdateTask(task);
+                task_dao.ReadTasks(tb_tasks, task);
+            }
         } else {
             JOptionPane.showMessageDialog(rootPane, "Por favor, Selecione uma categoria.", "Nenhum item selecionado", JOptionPane.ERROR_MESSAGE);
         }
@@ -573,6 +548,34 @@ public class main extends javax.swing.JFrame {
             task_dao.SelectFromID(task);
         }
     }//GEN-LAST:event_tb_tasksMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        txt_task.requestFocus();
+        cat_dao.ReadCat(tb_category);
+        task = cat_dao.ReadFirstCatID(cat);
+        task.setFk_user_id(user.getId());
+        task_dao.ReadTasks(tb_tasks, task);
+
+        cb_priority.getEditor().getEditorComponent().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                cb_priority.showPopup();
+            }
+        });
+
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btn_catAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_catAddActionPerformed
+        // TODO add your handling code here:        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_catAddActionPerformed
 
     /**
      * @param args the command line arguments

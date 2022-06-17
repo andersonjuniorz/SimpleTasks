@@ -2,6 +2,7 @@ package View;
 
 import Model.bean.User;
 import Model.dao.UserDAO;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 public class SignUp extends javax.swing.JFrame {
@@ -11,6 +12,7 @@ public class SignUp extends javax.swing.JFrame {
 
     public SignUp() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -159,6 +161,10 @@ public class SignUp extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Icons/logo.png")));
+    }
+    
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
         LogIn login = new LogIn(this, rootPaneCheckingEnabled);
         this.dispose();

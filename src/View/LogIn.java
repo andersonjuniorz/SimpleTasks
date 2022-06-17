@@ -3,10 +3,9 @@ package View;
 import java.awt.Cursor;
 import Model.bean.User;
 import Model.dao.UserDAO;
-
 import java.awt.Toolkit;
+
 import java.awt.event.KeyEvent;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class LogIn extends javax.swing.JDialog {
@@ -17,10 +16,7 @@ public class LogIn extends javax.swing.JDialog {
     public LogIn(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        jLabel4.setIcon(new ImageIcon("lock.png"));
-        jPanel3.add(jLabel4);
-        validate();
+        setIcon();
     }
 
     LogIn() {
@@ -51,11 +47,6 @@ public class LogIn extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("David", 0, 36)); // NOI18N
         jLabel1.setText("Login");
@@ -213,6 +204,10 @@ public class LogIn extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Icons/logo.png")));
+    }
+
     private void btn_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadastrarActionPerformed
         this.dispose();
         SignUp sg = new SignUp();
@@ -274,10 +269,6 @@ public class LogIn extends javax.swing.JDialog {
         ForgotPasword fp = new ForgotPasword();
         fp.setVisible(true);
     }//GEN-LAST:event_btn_forgotPassMouseClicked
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
-    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

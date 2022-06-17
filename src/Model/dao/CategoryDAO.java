@@ -15,7 +15,7 @@ public class CategoryDAO {
 
     UserPass.dbUser u = new UserPass.dbUser();
     private String driver = "com.mysql.cj.jdbc.Driver";
-    private String url = "jdbc:mysql://localhost:3306/todoList?useTimezone=true&serverTimezone=UTC";
+    private String url = "jdbc:mysql://localhost:3306/todolist?useTimezone=true&serverTimezone=UTC";
     private String user = ""+u.getUsername()+"";
     private String password = "" + u.getPass() + "";
 
