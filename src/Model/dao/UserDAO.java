@@ -59,7 +59,7 @@ public class UserDAO {
     /* read */
     public String ReadUser(User user) {
         String name = null;
-        String read = "select username from User where username = ?;";
+        String read = "select username from User where username = ?";
 
         try {
             Connection connection = Connect();

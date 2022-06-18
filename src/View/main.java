@@ -446,9 +446,9 @@ public class main extends javax.swing.JFrame {
             int answer = JOptionPane.showOptionDialog(null, "Tem certeza que deseja deletar a categoria '" + cat.getCat_name() + "' ?", "Deletar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (answer == JOptionPane.YES_OPTION) {
 
-                cat_dao.ReadCatIDWhereName(cat);
+                cat_dao.ReadCatIDWhereName(cat, task);
                 cat_dao.deleteCat(cat);
-                cat_dao.ReadCat(tb_category);
+                cat_dao.ReadCat(tb_category, task);
             }
         } else {
             JOptionPane.showMessageDialog(rootPane, "Por favor, Selecione uma categoria.", "Nenhum item selecionado", JOptionPane.ERROR_MESSAGE);
@@ -463,7 +463,7 @@ public class main extends javax.swing.JFrame {
             txt_catAdd.setText(cat.getCat_name());
             txt_catAdd.setForeground(Color.gray);
 
-            cat_dao.ReadCatIDWhereName(cat);
+            cat_dao.ReadCatIDWhereName(cat, task);
             task.setFk_cat_id(cat.getCat_id());
             task_dao.ReadTasks(tb_tasks, task);
         }
@@ -481,10 +481,10 @@ public class main extends javax.swing.JFrame {
             int answer = JOptionPane.showOptionDialog(rootPane, "Tem certeza que deseja editar esta categoria '" + cat.getCat_name() + "' ?", "Deletar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (answer == JOptionPane.YES_OPTION) {
 
-                cat_dao.ReadCatIDWhereName(cat);
+                cat_dao.ReadCatIDWhereName(cat, task);
                 cat.setCat_name(txt_catAdd.getText().strip());
                 cat_dao.UpdateCat(cat);
-                cat_dao.ReadCat(tb_category);
+                cat_dao.ReadCat(tb_category, task);
 
             }
         } else {
@@ -516,10 +516,10 @@ public class main extends javax.swing.JFrame {
 
         if (row >= 0) {
 
-            task_dao.ReadTaskIDWhereName(task);            
+            task_dao.ReadTaskIDWhereName(task);
 
             Object[] options = {"Sim", "Não"};
-            int answer = JOptionPane.showOptionDialog(null, "Deseja alterar a tarefa '"+task.getDescr()+"' ?", "Alterar tarefa", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            int answer = JOptionPane.showOptionDialog(null, "Deseja alterar a tarefa '" + task.getDescr() + "' ?", "Alterar tarefa", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (answer == JOptionPane.YES_OPTION) {
 
                 //Capturando dados editados
@@ -540,10 +540,9 @@ public class main extends javax.swing.JFrame {
     private void tb_tasksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_tasksMouseClicked
         int row = tb_tasks.getSelectedRow();
         if (row >= 0) {
-
+            
             String description = String.valueOf(tb_tasks.getValueAt(row, 1));
             task.setDescr(description);
-
             task_dao.ReadTaskIDWhereName(task);
             task_dao.SelectFromID(task);
         }
@@ -551,9 +550,11 @@ public class main extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         txt_task.requestFocus();
-        cat_dao.ReadCat(tb_category);
-        task = cat_dao.ReadFirstCatID(cat);
         task.setFk_user_id(user.getId());
+        cat_dao.ReadCat(tb_category, task);
+
+        //Lê a primeira categoria para aparecer as tasks na abertura do programa
+        cat_dao.ReadFirstCatID(cat, task);
         task_dao.ReadTasks(tb_tasks, task);
 
         cb_priority.getEditor().getEditorComponent().addKeyListener(new KeyListener() {
@@ -574,7 +575,14 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btn_catAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_catAddActionPerformed
-        // TODO add your handling code here:        // TODO add your handling code here:
+        if (txt_catAdd.getText().strip().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Por favor, digite um nome.", "Categoria sem nome", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            cat.setCat_name(txt_catAdd.getText().strip());
+            cat_dao.saveCategory(cat);
+            cat_dao.ReadCat(tb_category, task);
+        }
     }//GEN-LAST:event_btn_catAddActionPerformed
 
     /**

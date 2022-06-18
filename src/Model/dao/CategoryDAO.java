@@ -16,7 +16,7 @@ public class CategoryDAO {
     UserPass.dbUser u = new UserPass.dbUser();
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String url = "jdbc:mysql://localhost:3306/todolist?useTimezone=true&serverTimezone=UTC";
-    private String user = ""+u.getUsername()+"";
+    private String user = "" + u.getUsername() + "";
     private String password = "" + u.getPass() + "";
 
     /* CONNECT */
@@ -53,13 +53,14 @@ public class CategoryDAO {
     }
 
     /* Exibe todas as categorias */
-    public void ReadCat(JTable tb_category) {
+    public void ReadCat(JTable tb_category, Task task) {
         DefaultTableModel dtm = (DefaultTableModel) tb_category.getModel();
-        String read = "select name from Category ORDER BY idCategory";
+        String read = "SELECT name FROM Category INNER JOIN User WHERE idUser=? ORDER BY idCategory";
 
         try {
             Connection connection = Connect();
             PreparedStatement pst = connection.prepareStatement(read);
+            pst.setInt(1, task.getFk_user_id());
             ResultSet rs = pst.executeQuery();
             dtm.setRowCount(0);
 
@@ -75,47 +76,46 @@ public class CategoryDAO {
             JOptionPane.showMessageDialog(null, "Erro de leitura: " + e);
         }
     }
-    
-   /* LE O PRIMEIRO ID DA CATEGORIA */
-    public Task ReadFirstCatID(Category cat) {
-        Task task = new Task();
-        String read = "SELECT idCategory FROM Category ORDER BY idCategory Limit 1";
+
+    /* LE O PRIMEIRO ID DA CATEGORIA */
+    public void ReadFirstCatID(Category cat, Task task) {
+        String read = "SELECT idCategory FROM Category INNER JOIN User WHERE idUser=? ORDER BY idCategory Limit 1";
 
         try {
             Connection connection = Connect();
             PreparedStatement pst = connection.prepareStatement(read);
+            pst.setInt(1, task.getFk_user_id());
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
                 cat.setCat_id(rs.getInt(1));
                 task.setFk_cat_id(rs.getInt(1));
             }
-            
+
             connection.close();
             pst.close();
             rs.close();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro de leitura: " + e);
-        }finally{
-            return task;
         }
     }
-    
+
     /* LE O ID DA CATEGORIA */
-    public void ReadCatIDWhereName(Category cat) {
-        String read = "SELECT idCategory FROM Category WHERE name = ?";
+    public void ReadCatIDWhereName(Category cat, Task task) {
+        String read = "SELECT idCategory,name FROM Category INNER JOIN User WHERE idUser=? AND name=?";
 
         try {
             Connection connection = Connect();
             PreparedStatement pst = connection.prepareStatement(read);
-            pst.setString(1, cat.getCat_name());
+            pst.setInt(1, task.getFk_user_id());
+            pst.setString(2, cat.getCat_name());
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
                 cat.setCat_id(rs.getInt(1));
             }
-            
+
             connection.close();
             pst.close();
             rs.close();
