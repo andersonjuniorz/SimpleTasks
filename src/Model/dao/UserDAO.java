@@ -13,7 +13,7 @@ public class UserDAO {
 
     UserPass.dbUser u = new UserPass.dbUser();
     private String driver = "com.mysql.cj.jdbc.Driver";
-    private String url = "jdbc:mysql://localhost:3306/todoList?useTimezone=true&serverTimezone=UTC";
+    private String url = "jdbc:mysql://localhost:3306/todolist?useTimezone=true&serverTimezone=UTC";
     private String user = "" + u.getUsername()+ "";
     private String password = "" + u.getPass() + "";
 
@@ -34,7 +34,7 @@ public class UserDAO {
 
     /* CRIAR NOVO USUARIO */
     public void InsertUser(User user) {
-        String insert = "insert into User (username,passw,email) values (?,?,?)";
+        String insert = "insert into User (username,passw,email,recoveryCode) values (?,?,?,?)";
 
         try {
             Connection conn = Connect();
@@ -42,9 +42,7 @@ public class UserDAO {
             pst.setString(1, user.getUsername());
             pst.setString(2, user.getPass());
             pst.setString(3, user.getEmail());
-            JOptionPane.showMessageDialog(null, user.getUsername());
-            JOptionPane.showMessageDialog(null, user.getPass());
-            JOptionPane.showMessageDialog(null, user.getEmail());
+            pst.setString(4, user.getRecoveryCode());
             pst.executeUpdate();
 
             conn.close();
@@ -59,7 +57,7 @@ public class UserDAO {
     /* read */
     public String ReadUser(User user) {
         String name = null;
-        String read = "select username from User where username = ?;";
+        String read = "select username from User where username = ?";
 
         try {
             Connection connection = Connect();

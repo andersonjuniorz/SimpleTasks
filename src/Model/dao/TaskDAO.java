@@ -15,7 +15,7 @@ public class TaskDAO {
     UserPass.dbUser u = new UserPass.dbUser();
 
     private String driver = "com.mysql.cj.jdbc.Driver";
-    private String url = "jdbc:mysql://localhost:3306/todoList?useTimezone=true&serverTimezone=UTC";
+    private String url = "jdbc:mysql://localhost:3306/todolist?useTimezone=true&serverTimezone=UTC";
     private String user = "" + u.getUsername() + "";
     private String password = "" + u.getPass() + "";
 
@@ -61,12 +61,13 @@ public class TaskDAO {
     /* EXIBE TODAS AS TAREFAS DE UMA CATEGORIA X */
     public void ReadTasks(JTable tb_category,Task task) {
         DefaultTableModel dtm = (DefaultTableModel) tb_category.getModel();
-        String read = "select done,descr,priority,dueDate from Task where fk_Category=? ORDER BY idTask DESC";
+        String read = "SELECT done,descr,priority,dueDate FROM Task WHERE fk_Category=? AND fk_User=? ORDER BY idTask DESC";
 
         try {
             Connection connection = Connect();
             PreparedStatement pst = connection.prepareStatement(read);
             pst.setInt(1, task.getFk_cat_id());
+            pst.setInt(2, task.getFk_user_id());
             ResultSet rs = pst.executeQuery();
             dtm.setRowCount(0);
 
@@ -87,22 +88,23 @@ public class TaskDAO {
             JOptionPane.showMessageDialog(null, "Erro de leitura: " + e);
         }
     }
+    /* ALTEREI O SQL - VERIFIQUE SE ESTÁ FUNCIONANDO */
     
     /* LE O ID DA CATEGORIA */
     public void ReadTaskIDWhereName(Task task) {
-        String read = "select idTask from Task WHERE fk_Category=? and descr=?";
+        String read = "SELECT idTask FROM Task WHERE fk_Category=? AND fk_User=? AND descr=?";
 
         try {
             Connection connection = Connect();
             PreparedStatement pst = connection.prepareStatement(read);
             pst.setInt(1, task.getFk_cat_id());
-            pst.setString(2, task.getDescr());
+            pst.setInt(2, task.getFk_user_id());
+            pst.setString(3, task.getDescr());
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
                 task.setId(rs.getInt(1));
             }
-            //JOptionPane.showMessageDialog(null, "idTask: "+task.getId());
             
             connection.close();
             pst.close();
@@ -130,7 +132,6 @@ public class TaskDAO {
                 task.setDone(rs.getBoolean(4));
                 task.setFk_cat_id(rs.getInt(5));
             }
-           // JOptionPane.showMessageDialog(null, "idTask: "+task.getId());
             
             connection.close();
             pst.close();

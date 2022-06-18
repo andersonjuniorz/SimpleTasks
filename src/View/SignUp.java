@@ -2,6 +2,8 @@ package View;
 
 import Model.bean.User;
 import Model.dao.UserDAO;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class SignUp extends javax.swing.JFrame {
@@ -11,6 +13,7 @@ public class SignUp extends javax.swing.JFrame {
 
     public SignUp() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -34,6 +37,9 @@ public class SignUp extends javax.swing.JFrame {
         txt_email = new javax.swing.JTextField();
         btn_signup = new javax.swing.JButton();
         btn_voltar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txt_recoveryCode = new javax.swing.JTextField();
+        codeAsk = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,7 +53,7 @@ public class SignUp extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(101, 101, 101)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -65,8 +71,26 @@ public class SignUp extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel3.setText("Senha:");
 
+        txt_user.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_userKeyPressed(evt);
+            }
+        });
+
+        txt_pass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_passKeyPressed(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel4.setText("Email:");
+
+        txt_email.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_emailKeyPressed(evt);
+            }
+        });
 
         btn_signup.setText("CADASTRAR");
         btn_signup.addActionListener(new java.awt.event.ActionListener() {
@@ -82,27 +106,50 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel5.setText("Código de recuperação:");
+
+        txt_recoveryCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_recoveryCodeKeyPressed(evt);
+            }
+        });
+
+        codeAsk.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        codeAsk.setForeground(new java.awt.Color(0, 0, 153));
+        codeAsk.setText("?");
+        codeAsk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                codeAskMouseEntered(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(79, 79, 79)
+                .addGap(77, 77, 77)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(codeAsk))
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(btn_signup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_signup, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                     .addComponent(txt_email)
                     .addComponent(txt_pass)
                     .addComponent(txt_user)
-                    .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(92, Short.MAX_VALUE))
+                    .addComponent(btn_voltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_recoveryCode))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_user, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -110,15 +157,21 @@ public class SignUp extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(codeAsk))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_recoveryCode, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
                 .addComponent(btn_signup, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+                .addGap(65, 65, 65))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -147,17 +200,23 @@ public class SignUp extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Icons/logo.png")));
+    }
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
         LogIn login = new LogIn(this, rootPaneCheckingEnabled);
@@ -166,13 +225,14 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_voltarActionPerformed
 
     private void btn_signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_signupActionPerformed
-        String username = txt_user.getText().replaceAll(" ", "").strip();
+        String username = txt_user.getText().toLowerCase().replaceAll(" ", "").strip();
         String pass = String.valueOf(txt_pass.getPassword());
-        String email = txt_email.getText().replaceAll(" ", "").strip();
+        String email = txt_email.getText().toLowerCase().replaceAll(" ", "").strip();
+        String recoveryCode = txt_recoveryCode.getText().replaceAll(" ", "").strip();
 
-        if (!username.isEmpty() || !email.isEmpty()) {
+        if (!username.isEmpty() || !email.isEmpty() || !recoveryCode.isEmpty()) {
 
-            user.setUser(username, pass, email);
+            user.setUser(username, pass, email, recoveryCode);
             dao.InsertUser(user);
 
             //Verificando se usuario foi criado        
@@ -193,6 +253,38 @@ public class SignUp extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Por favor, informe um usuário válido.");
         }
     }//GEN-LAST:event_btn_signupActionPerformed
+
+    private void txt_userKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_userKeyPressed
+        //Se clicar Enter, vai para o próximo campo
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_pass.requestFocus();
+        }
+    }//GEN-LAST:event_txt_userKeyPressed
+
+    private void txt_passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passKeyPressed
+        //Se clicar Enter, vai para o próximo campo
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_email.requestFocus();
+        }
+    }//GEN-LAST:event_txt_passKeyPressed
+
+    private void txt_emailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_emailKeyPressed
+        //Se clicar Enter, vai para o próximo campo
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_recoveryCode.requestFocus();
+        }
+    }//GEN-LAST:event_txt_emailKeyPressed
+
+    private void txt_recoveryCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_recoveryCodeKeyPressed
+        //Se clicar Enter, vai para o próximo campo
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btn_signup.doClick();
+        }
+    }//GEN-LAST:event_txt_recoveryCodeKeyPressed
+
+    private void codeAskMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_codeAskMouseEntered
+        JOptionPane.showMessageDialog(rootPane, "O código de recuperação será necessário caso precise fazer alterações em sua conta. pro favor,\n anote, não entregue a terceiros e não perca. Caso contrário, não será possivel recuperar sua conta.");
+    }//GEN-LAST:event_codeAskMouseEntered
 
     /**
      * @param args the command line arguments
@@ -232,15 +324,18 @@ public class SignUp extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_signup;
     private javax.swing.JButton btn_voltar;
+    private javax.swing.JLabel codeAsk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField txt_email;
     private javax.swing.JPasswordField txt_pass;
+    private javax.swing.JTextField txt_recoveryCode;
     private javax.swing.JTextField txt_user;
     // End of variables declaration//GEN-END:variables
 }
