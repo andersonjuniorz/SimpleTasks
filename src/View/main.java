@@ -59,6 +59,8 @@ public class main extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         subMenu_exit = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         subMenu_about = new javax.swing.JMenuItem();
 
@@ -143,7 +145,7 @@ public class main extends javax.swing.JFrame {
             tb_tasks.getColumnModel().getColumn(2).setCellEditor(new javax.swing.DefaultCellEditor(cb_priority));
         }
 
-        btn_deleteTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/recycle-bin (1).png"))); // NOI18N
+        btn_deleteTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/recycle-bin.png"))); // NOI18N
         btn_deleteTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_deleteTaskActionPerformed(evt);
@@ -183,7 +185,7 @@ public class main extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
-        btn_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/close (1).png"))); // NOI18N
+        btn_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/close.png"))); // NOI18N
         btn_exit.setText(" FECHAR");
         btn_exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -351,8 +353,8 @@ public class main extends javax.swing.JFrame {
         jMenu1.setText("Arquivo");
 
         subMenu_exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
-        subMenu_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/close (1).png"))); // NOI18N
-        subMenu_exit.setText("Sair");
+        subMenu_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/sbClose.png"))); // NOI18N
+        subMenu_exit.setText(" Sair");
         subMenu_exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenu_exitActionPerformed(evt);
@@ -362,10 +364,24 @@ public class main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setText("Perfil");
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/sbUser.png"))); // NOI18N
+        jMenuItem1.setText("Perfil");
+        jMenuItem1.setEnabled(false);
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu2);
+
         jMenu3.setText("Ajuda");
 
         subMenu_about.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        subMenu_about.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/note.png"))); // NOI18N
+        subMenu_about.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/sbNote.png"))); // NOI18N
         subMenu_about.setText("Sobre");
         subMenu_about.setEnabled(false);
         jMenu3.add(subMenu_about);
@@ -446,9 +462,9 @@ public class main extends javax.swing.JFrame {
             int answer = JOptionPane.showOptionDialog(null, "Tem certeza que deseja deletar a categoria '" + cat.getCat_name() + "' ?", "Deletar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (answer == JOptionPane.YES_OPTION) {
 
-                cat_dao.ReadCatIDWhereName(cat, task);
+                cat_dao.ReadCatIDWhereName(cat);
                 cat_dao.deleteCat(cat);
-                cat_dao.ReadCat(tb_category, task);
+                cat_dao.ReadCat(tb_category, cat);
             }
         } else {
             JOptionPane.showMessageDialog(rootPane, "Por favor, Selecione uma categoria.", "Nenhum item selecionado", JOptionPane.ERROR_MESSAGE);
@@ -463,7 +479,7 @@ public class main extends javax.swing.JFrame {
             txt_catAdd.setText(cat.getCat_name());
             txt_catAdd.setForeground(Color.gray);
 
-            cat_dao.ReadCatIDWhereName(cat, task);
+            cat_dao.ReadCatIDWhereName(cat);
             task.setFk_cat_id(cat.getCat_id());
             task_dao.ReadTasks(tb_tasks, task);
         }
@@ -481,10 +497,10 @@ public class main extends javax.swing.JFrame {
             int answer = JOptionPane.showOptionDialog(rootPane, "Tem certeza que deseja editar esta categoria '" + cat.getCat_name() + "' ?", "Deletar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (answer == JOptionPane.YES_OPTION) {
 
-                cat_dao.ReadCatIDWhereName(cat, task);
+                cat_dao.ReadCatIDWhereName(cat);
                 cat.setCat_name(txt_catAdd.getText().strip());
                 cat_dao.UpdateCat(cat);
-                cat_dao.ReadCat(tb_category, task);
+                cat_dao.ReadCat(tb_category, cat);
 
             }
         } else {
@@ -540,7 +556,7 @@ public class main extends javax.swing.JFrame {
     private void tb_tasksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_tasksMouseClicked
         int row = tb_tasks.getSelectedRow();
         if (row >= 0) {
-            
+
             String description = String.valueOf(tb_tasks.getValueAt(row, 1));
             task.setDescr(description);
             task_dao.ReadTaskIDWhereName(task);
@@ -550,8 +566,10 @@ public class main extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         txt_task.requestFocus();
+
+        cat.setFk_User(user.getId());
         task.setFk_user_id(user.getId());
-        cat_dao.ReadCat(tb_category, task);
+        cat_dao.ReadCat(tb_category, cat);
 
         //Lê a primeira categoria para aparecer as tasks na abertura do programa
         cat_dao.ReadFirstCatID(cat, task);
@@ -581,9 +599,13 @@ public class main extends javax.swing.JFrame {
         } else {
             cat.setCat_name(txt_catAdd.getText().strip());
             cat_dao.saveCategory(cat);
-            cat_dao.ReadCat(tb_category, task);
+            cat_dao.ReadCat(tb_category, cat);
         }
     }//GEN-LAST:event_btn_catAddActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -637,8 +659,10 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

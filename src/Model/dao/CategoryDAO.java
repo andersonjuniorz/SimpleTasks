@@ -36,12 +36,13 @@ public class CategoryDAO {
 
     /* insere uma nova categoria */
     public void saveCategory(Category cat) {
-        String insert = "insert into Category (name) values (?)";
+        String insert = "insert into Category (name,fk_User) values (?,?)";
 
         try {
             Connection conn = Connect();
             PreparedStatement pst = conn.prepareStatement(insert);
             pst.setString(1, cat.getCat_name());
+            pst.setInt(2, cat.getFk_User());
             pst.executeUpdate();
 
             conn.close();
@@ -52,15 +53,15 @@ public class CategoryDAO {
         }
     }
 
-    /* Exibe todas as categorias */
-    public void ReadCat(JTable tb_category, Task task) {
+    /* EXIBE TODAS AS CATEGORIAS */
+    public void ReadCat(JTable tb_category,Category cat) {
         DefaultTableModel dtm = (DefaultTableModel) tb_category.getModel();
-        String read = "SELECT name FROM Category INNER JOIN User WHERE idUser=? ORDER BY idCategory";
+        String read = "SELECT name FROM Category WHERE fk_User=? ORDER BY idCategory";
 
         try {
             Connection connection = Connect();
             PreparedStatement pst = connection.prepareStatement(read);
-            pst.setInt(1, task.getFk_user_id());
+            pst.setInt(1, cat.getFk_User());
             ResultSet rs = pst.executeQuery();
             dtm.setRowCount(0);
 
@@ -79,12 +80,12 @@ public class CategoryDAO {
 
     /* LE O PRIMEIRO ID DA CATEGORIA */
     public void ReadFirstCatID(Category cat, Task task) {
-        String read = "SELECT idCategory FROM Category INNER JOIN User WHERE idUser=? ORDER BY idCategory Limit 1";
+        String read = "SELECT idCategory FROM Category  WHERE fk_User=? ORDER BY idCategory Limit 1";
 
         try {
             Connection connection = Connect();
             PreparedStatement pst = connection.prepareStatement(read);
-            pst.setInt(1, task.getFk_user_id());
+            pst.setInt(1, cat.getFk_User());
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -102,13 +103,13 @@ public class CategoryDAO {
     }
 
     /* LE O ID DA CATEGORIA */
-    public void ReadCatIDWhereName(Category cat, Task task) {
-        String read = "SELECT idCategory,name FROM Category INNER JOIN User WHERE idUser=? AND name=?";
+    public void ReadCatIDWhereName(Category cat) {
+        String read = "SELECT idCategory,name FROM Category WHERE fk_User=? AND name=?";
 
         try {
             Connection connection = Connect();
             PreparedStatement pst = connection.prepareStatement(read);
-            pst.setInt(1, task.getFk_user_id());
+            pst.setInt(1, cat.getFk_User());
             pst.setString(2, cat.getCat_name());
             ResultSet rs = pst.executeQuery();
 
@@ -127,7 +128,7 @@ public class CategoryDAO {
 
     /* Edita a categoria */
     public void UpdateCat(Category cat) {
-        String update = "update Category set name=? where idCategory=?";
+        String update = "UPDATE Category SET name=? WHERE idCategory=?";
 
         try {
             Connection conn = Connect();
@@ -144,9 +145,9 @@ public class CategoryDAO {
         }
     }
 
-    /* Deleta a categoria pelo ID */
+    /* DELETE A CATEGORIA PELO ID  */
     public void deleteCat(Category cat) {
-        String delete = "delete from Category where idCategory=?";
+        String delete = "DELETE FROM Category WHERE idCategory=?";
 
         try {
             Connection conn = Connect();
@@ -161,5 +162,4 @@ public class CategoryDAO {
             JOptionPane.showMessageDialog(null, "Erro no delete: " + e);
         }
     }
-
 }

@@ -37,12 +37,31 @@
                   <KeyStroke key="Shift+H"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Icons/close (1).png"/>
+                  <Image iconType="3" name="/Icons/sbClose.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Sair"/>
+                <Property name="text" type="java.lang.String" value=" Sair"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenu_exitActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Perfil"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Icons/sbUser.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Perfil"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -58,7 +77,7 @@
                   <KeyStroke key="Ctrl+J"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Icons/note.png"/>
+                  <Image iconType="3" name="/Icons/sbNote.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sobre"/>
                 <Property name="enabled" type="boolean" value="false"/>
@@ -331,7 +350,7 @@
             <Component class="javax.swing.JButton" name="btn_deleteTask">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Icons/recycle-bin (1).png"/>
+                  <Image iconType="3" name="/Icons/recycle-bin.png"/>
                 </Property>
               </Properties>
               <Events>
@@ -353,7 +372,7 @@
         <Component class="javax.swing.JButton" name="btn_exit">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Icons/close (1).png"/>
+              <Image iconType="3" name="/Icons/close.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value=" FECHAR"/>
           </Properties>

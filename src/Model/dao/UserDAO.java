@@ -34,7 +34,7 @@ public class UserDAO {
 
     /* CRIAR NOVO USUARIO */
     public void InsertUser(User user) {
-        String insert = "insert into User (username,passw,email) values (?,?,?)";
+        String insert = "insert into User (username,passw,email,recoveryCode) values (?,?,?,?)";
 
         try {
             Connection conn = Connect();
@@ -42,9 +42,7 @@ public class UserDAO {
             pst.setString(1, user.getUsername());
             pst.setString(2, user.getPass());
             pst.setString(3, user.getEmail());
-            JOptionPane.showMessageDialog(null, user.getUsername());
-            JOptionPane.showMessageDialog(null, user.getPass());
-            JOptionPane.showMessageDialog(null, user.getEmail());
+            pst.setString(4, user.getRecoveryCode());
             pst.executeUpdate();
 
             conn.close();
