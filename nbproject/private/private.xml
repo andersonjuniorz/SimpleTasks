@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/workspaces/ws-github/Meus-Projetos/ToDoList/src/Model/dao/TaskDAO.java</file>
-            <file>file:/C:/workspaces/ws-github/Meus-Projetos/ToDoList/src/View/main.java</file>
+            <file>file:/C:/workspaces/ws-github/Meus-Projetos/todo-list-swing/src/Model/dao/TaskDAO.java</file>
+            <file>file:/C:/workspaces/ws-github/Meus-Projetos/todo-list-swing/src/Model/dao/CategoryDAO.java</file>
+            <file>file:/C:/workspaces/ws-github/Meus-Projetos/todo-list-swing/src/View/LogIn.java</file>
+            <file>file:/C:/workspaces/ws-github/Meus-Projetos/todo-list-swing/src/View/main.java</file>
         </group>
     </open-files>
 </project-private>
