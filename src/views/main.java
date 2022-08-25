@@ -1,14 +1,13 @@
-package view;
+package views;
 
-import entity.Category;
-import entity.Task;
-import entity.User;
+import entities.Category;
+import entities.Task;
+import entities.User;
 
 import dao.CategoryDAO;
 import dao.TaskDAO;
 
 import java.awt.Color;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JOptionPane;
@@ -23,7 +22,6 @@ public class main extends javax.swing.JFrame {
 
     public main() {
         initComponents();
-        setIcon();
     }
 
     /**
@@ -83,7 +81,7 @@ public class main extends javax.swing.JFrame {
             }
         });
 
-        btn_addTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/save.png"))); // NOI18N
+        btn_addTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png"))); // NOI18N
         btn_addTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_addTaskActionPerformed(evt);
@@ -145,14 +143,14 @@ public class main extends javax.swing.JFrame {
             tb_tasks.getColumnModel().getColumn(2).setCellEditor(new javax.swing.DefaultCellEditor(cb_priority));
         }
 
-        btn_deleteTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/recycle-bin.png"))); // NOI18N
+        btn_deleteTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/recycle-bin.png"))); // NOI18N
         btn_deleteTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_deleteTaskActionPerformed(evt);
             }
         });
 
-        btn_updateTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/note.png"))); // NOI18N
+        btn_updateTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/note.png"))); // NOI18N
         btn_updateTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_updateTaskActionPerformed(evt);
@@ -185,7 +183,7 @@ public class main extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
-        btn_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/close.png"))); // NOI18N
+        btn_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/close.png"))); // NOI18N
         btn_exit.setText(" FECHAR");
         btn_exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,7 +211,7 @@ public class main extends javax.swing.JFrame {
             }
         });
 
-        btn_catAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/save.png"))); // NOI18N
+        btn_catAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png"))); // NOI18N
         btn_catAdd.setText("ADD");
         btn_catAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,7 +219,7 @@ public class main extends javax.swing.JFrame {
             }
         });
 
-        btn_catDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/delete.png"))); // NOI18N
+        btn_catDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
         btn_catDel.setText("DELETAR");
         btn_catDel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,7 +227,7 @@ public class main extends javax.swing.JFrame {
             }
         });
 
-        btn_catEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/edit.png"))); // NOI18N
+        btn_catEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png"))); // NOI18N
         btn_catEdit.setText("EDITAR");
         btn_catEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -353,7 +351,7 @@ public class main extends javax.swing.JFrame {
         jMenu1.setText("Arquivo");
 
         subMenu_exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
-        subMenu_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/sbClose.png"))); // NOI18N
+        subMenu_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sbClose.png"))); // NOI18N
         subMenu_exit.setText(" Sair");
         subMenu_exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -366,7 +364,7 @@ public class main extends javax.swing.JFrame {
 
         jMenu2.setText("Perfil");
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/sbUser.png"))); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sbUser.png"))); // NOI18N
         jMenuItem1.setText("Perfil");
         jMenuItem1.setEnabled(false);
         jMenu2.add(jMenuItem1);
@@ -376,7 +374,7 @@ public class main extends javax.swing.JFrame {
         jMenu3.setText("Ajuda");
 
         subMenu_about.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        subMenu_about.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/sbNote.png"))); // NOI18N
+        subMenu_about.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sbNote.png"))); // NOI18N
         subMenu_about.setText("Sobre");
         subMenu_about.setEnabled(false);
         jMenu3.add(subMenu_about);
@@ -402,10 +400,6 @@ public class main extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void setIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Icons/logo.png")));
-    }
 
     private void taskSetDefaultValues() {
         task.setDescr(txt_task.getText().strip());

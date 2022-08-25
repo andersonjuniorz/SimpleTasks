@@ -1,9 +1,7 @@
-package view;
+package views;
 
-import java.awt.Cursor;
-import entity.User;
+import entities.User;
 import dao.UserDAO;
-import java.awt.Toolkit;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
@@ -16,7 +14,6 @@ public class LogIn extends javax.swing.JDialog {
     public LogIn(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setIcon();
     }
 
     LogIn() {
@@ -50,7 +47,7 @@ public class LogIn extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("David", 0, 36)); // NOI18N
         jLabel1.setText("Login");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/lock3.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/lock3.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -182,10 +179,6 @@ public class LogIn extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void setIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Icons/logo.png")));
-    }
 
     private void btn_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadastrarActionPerformed
         this.dispose();
